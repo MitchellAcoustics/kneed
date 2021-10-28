@@ -283,21 +283,8 @@ class KneeLocator(object):
                 minima_threshold_index += 1
 
             if self.y_difference[j] < threshold:
-                if self.curve == "convex":
-                    if self.direction == "decreasing":
-                        knee = self.x[threshold_index]
-                        norm_knee = self.x_normalized[threshold_index]
-                    else:
-                        knee = self.x[-(threshold_index + 1)]
-                        norm_knee = self.x_normalized[threshold_index]
-
-                elif self.curve == "concave":
-                    if self.direction == "decreasing":
-                        knee = self.x[-(threshold_index + 1)]
-                        norm_knee = self.x_normalized[threshold_index]
-                    else:
-                        knee = self.x[threshold_index]
-                        norm_knee = self.x_normalized[threshold_index]
+                knee = self.x[threshold_index]
+                norm_knee = self.x_normalized[threshold_index]
 
                 # add the y value at the knee
                 y_at_knee = self.y[self.x == knee][0]
