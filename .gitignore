@@ -44,3 +44,6 @@ docs/_build
 
 # Cookiecutter
 output/
+diff_test.py
+conftest.py
+.vscode/settings.json

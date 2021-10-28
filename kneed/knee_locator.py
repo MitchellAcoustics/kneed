@@ -178,12 +178,10 @@ class KneeLocator(object):
         self.y_normalized = self.__normalize(self.Ds_y)
 
         # Step 3: Calculate the Difference curve
-        self.y_normalized = self.transform_y(
-            self.y_normalized, self.direction, self.curve
-        )
         # normalized difference curve
-        self.y_difference = self.y_normalized - self.x_normalized
-        self.x_difference = self.x_normalized.copy()
+        self.x_difference, self.y_difference = self.__difference(
+            self.x_normalized, self.y_normalized, self.direction, self.curve
+        )
 
         # Step 4: Identify local maxima/minima
         # local maxima
@@ -216,6 +214,22 @@ class KneeLocator(object):
         :param a: The array to normalize
         """
         return (a - min(a)) / (max(a) - min(a))
+
+    @staticmethod
+    def __difference(
+        x: Iterable[float], y: Iterable[float], direction: str, curve: str
+    ):
+        """calculate the difference curve, based on comparison to a straight line
+        """
+        if direction == "decreasing":
+            line = -x + max(x)
+        if direction == "increasing":
+            line = x
+
+        y_difference = abs(y - line)
+        x_difference = x.copy()
+
+        return x_difference, y_difference
 
     @staticmethod
     def transform_y(y: Iterable[float], direction: str, curve: str) -> float:
