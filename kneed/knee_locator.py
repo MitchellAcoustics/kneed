@@ -222,11 +222,14 @@ class KneeLocator(object):
         """calculate the difference curve, based on comparison to a straight line
         """
         if direction == "decreasing":
-            line = -x + max(x)
+            line = -x + 1
         if direction == "increasing":
             line = x
 
-        y_difference = abs(y - line)
+        if curve == "concave":
+            y_difference = y - line
+        if curve == "convex":
+            y_difference = line - y
         x_difference = x.copy()
 
         return x_difference, y_difference
